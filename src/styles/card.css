@@ -1,0 +1,79 @@
+/* ---------- Carte façon TCG (format 63 × 88) ---------- */
+.tcg{--cw:280px;width:var(--cw);aspect-ratio:63/88;position:relative;perspective:1100px;container-type:inline-size;flex:none}
+.tcg-body{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s cubic-bezier(.2,.8,.2,1);border-radius:5cqw;
+  box-shadow:0 2.5cqw 7cqw rgba(0,0,0,.45),0 .8cqw 1.6cqw rgba(0,0,0,.35)}
+.tcg.is-active .tcg-body{transition:transform .08s linear}
+.tcg-flipper{position:absolute;inset:0;transform-style:preserve-3d;border-radius:5cqw}
+.tcg.is-flipping .tcg-flipper{animation:tcg-flip .8s cubic-bezier(.3,.75,.2,1) both}
+@keyframes tcg-flip{0%{transform:rotateY(180deg) scale(.96)}55%{transform:rotateY(70deg) scale(1.06)}100%{transform:rotateY(0) scale(1)}}
+.tcg-face{position:absolute;inset:0;border-radius:5cqw;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.tcg-back--rear{transform:rotateY(180deg)}
+
+/* Face avant */
+.tcg-front{background:var(--fr);color:#fff}
+.tcg-frame{position:absolute;inset:0;padding:3.6cqw;display:flex;flex-direction:column;gap:2.4cqw}
+.tcg-front::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.18),transparent 35%,rgba(0,0,0,.25));pointer-events:none}
+.tcg-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:2cqw;font-size:3.9cqw;font-weight:700;line-height:1.1}
+.tcg-cat{opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcg-gems{display:flex;gap:1cqw;flex:none}
+.tcg-gems i{width:3cqw;height:3cqw;transform:rotate(45deg);border:.5cqw solid rgba(255,255,255,.75);border-radius:.6cqw}
+.tcg-gems i.on{background:#fff;border-color:#fff;box-shadow:0 0 1.6cqw rgba(255,255,255,.7)}
+.tcg-name{position:relative;margin:0;font-family:var(--display);font-weight:850;font-stretch:78%;line-height:.98;letter-spacing:-.005em;text-wrap:balance;text-shadow:0 .5cqw 0 rgba(0,0,0,.18)}
+.tcg-name--l{font-size:10.6cqw} .tcg-name--m{font-size:8.8cqw} .tcg-name--s{font-size:7.4cqw} .tcg-name--xs{font-size:6.3cqw}
+.tcg-art{position:relative;flex:1 1 30%;min-height:24%;border-radius:3cqw;overflow:hidden;display:grid;place-items:center;
+  background-color:color-mix(in oklab,var(--fr) 55%,#08060f);
+  background-image:radial-gradient(circle at 50% 40%,rgba(255,255,255,.22),transparent 60%),radial-gradient(rgba(255,255,255,.16) 18%,transparent 20%);
+  background-size:100% 100%,3.4cqw 3.4cqw;box-shadow:inset 0 0 0 .5cqw rgba(255,255,255,.22)}
+.tcg-sigil{position:absolute;width:78%;max-height:92%;aspect-ratio:1;color:rgba(255,255,255,.5)}
+.tcg-glyph{position:relative;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-weight:700;font-size:13cqw;line-height:1;color:#fff;text-shadow:0 0 4cqw color-mix(in oklab,var(--fr) 70%,#000),0 .6cqw 0 rgba(0,0,0,.35);white-space:nowrap;max-width:94%;overflow:hidden;letter-spacing:.04em}
+.tcg-glyph--2{font-size:20cqw}.tcg-glyph--3{font-size:16cqw}.tcg-glyph--4{font-size:13cqw}.tcg-glyph--5{font-size:10.6cqw}.tcg-glyph--6{font-size:9cqw}.tcg-glyph--7{font-size:7.8cqw}.tcg-glyph--8{font-size:6.8cqw}
+.tcg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;pointer-events:none;user-select:none}
+.tcg-img--portrait{object-position:50% 12%}
+.tcg-art.has-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.62),transparent 40%);box-shadow:inset 0 0 0 .5cqw rgba(255,255,255,.22);border-radius:inherit;pointer-events:none}
+.tcg-art.has-img .tcg-sigil{display:none}
+.tcg-sub{position:absolute;z-index:1;left:3cqw;bottom:2.4cqw;right:3cqw;font-size:3.5cqw;font-style:italic;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 .3cqw 1cqw rgba(0,0,0,.6)}
+.tcg-flags{position:absolute;z-index:1;top:2.4cqw;left:2.4cqw;display:flex;gap:1.2cqw;flex-wrap:wrap}
+.flag{font-size:3.1cqw;font-weight:800;padding:.6cqw 2cqw;border-radius:99px;background:rgba(15,12,29,.82);color:#fff}
+.flag--filmed{background:var(--give)}
+.flag--warn{background:var(--gold);color:#1A1405}
+.tcg-text{position:relative;flex:0 1 auto;background:#F7F5FF;color:#1B1631;border-radius:3cqw;padding:3.2cqw 3.6cqw;font-size:4.7cqw;line-height:1.38;font-weight:500}
+.tcg-text p{margin:0;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.tcg-foot{position:relative;font-size:3.6cqw;font-weight:700;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.2em}
+
+/* Reflets */
+.tcg-shine,.tcg-glare{position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+.tcg-shine{opacity:0;mix-blend-mode:color-dodge;transition:opacity .35s;
+  background-image:repeating-linear-gradient(110deg,hsl(2 100% 73%) 0%,hsl(53 100% 69%) 8%,hsl(93 100% 69%) 16%,hsl(176 100% 76%) 24%,hsl(228 100% 74%) 32%,hsl(283 100% 73%) 40%,hsl(2 100% 73%) 48%);
+  background-size:300% 300%;background-position:var(--mx,50%) var(--my,50%);filter:brightness(.55) contrast(1.5) saturate(1.3)}
+.tcg-glare{opacity:0;mix-blend-mode:overlay;transition:opacity .35s;
+  background:radial-gradient(farthest-corner circle at var(--mx,50%) var(--my,30%),rgba(255,255,255,.7) 0%,rgba(255,255,255,.2) 28%,rgba(0,0,0,.3) 90%)}
+.tcg.is-active .tcg-glare{opacity:.85}
+.tcg--foil .tcg-shine{opacity:.08}
+.tcg.is-active .tcg--foil .tcg-shine{opacity:.45}
+.tcg--holo .tcg-shine{opacity:.22}
+.tcg.is-active .tcg--holo .tcg-shine{opacity:.8}
+.tcg--holo .tcg-frame{box-shadow:inset 0 0 0 1.3cqw var(--gold),inset 0 0 0 1.8cqw rgba(0,0,0,.25);border-radius:5cqw}
+
+/* Dos de carte */
+.tcg-back{background-color:color-mix(in oklab,var(--fr) 70%,#0b0816);display:grid;place-items:center;
+  background-image:repeating-conic-gradient(from 0deg at 50% 46%,rgba(255,255,255,.07) 0deg 6deg,transparent 6deg 12deg),radial-gradient(circle at 50% 46%,rgba(255,255,255,.18),transparent 55%);
+  box-shadow:inset 0 0 0 2.4cqw rgba(255,255,255,.1),inset 0 0 0 3cqw rgba(0,0,0,.25)}
+.tcg-back-ring{width:46cqw;height:46cqw;border-radius:50%;display:grid;place-items:center;background:rgba(15,12,29,.55);box-shadow:0 0 0 1.4cqw rgba(255,255,255,.85),0 0 9cqw rgba(0,0,0,.5);margin-bottom:8cqw}
+.tcg-back-ring svg{width:30cqw;height:30cqw}
+.tcg-back-label{position:absolute;bottom:9cqw;font-family:var(--display);font-weight:850;font-stretch:85%;font-size:5.4cqw;background:#fff;color:#16122A;padding:1.4cqw 4.4cqw;border-radius:99px}
+.tcg.is-back .tcg-glare{opacity:.4}
+
+/* États de jeu */
+.tcg-owner{position:absolute;z-index:3;left:50%;top:0;transform:translate(-50%,-55%) rotate(-3deg);white-space:nowrap;font-family:var(--display);font-weight:850;font-stretch:85%;font-size:15px;padding:6px 14px;border-radius:99px;color:#0F0C1D;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+.tcg-owner--p0{background:var(--p0)} .tcg-owner--p1{background:var(--p1)}
+.tcg.is-winner .tcg-body{box-shadow:0 0 0 4px var(--gold),0 0 60px rgba(245,196,81,.45),0 2.5cqw 7cqw rgba(0,0,0,.45)}
+.tcg.is-winner::after{content:"Gagne le round";position:absolute;z-index:3;left:50%;bottom:0;transform:translate(-50%,50%);background:var(--gold);color:#1A1405;font-family:var(--display);font-weight:850;font-stretch:85%;font-size:14px;padding:5px 12px;border-radius:99px;white-space:nowrap}
+.tcg.is-loser .tcg-body{filter:saturate(.55) brightness(.72)}
+
+/* Tailles */
+.tcg--table{--cw:clamp(240px,23vw,300px)}
+.tcg--hero{--cw:clamp(260px,27vw,340px)}
+.tcg--mini{--cw:150px}
+.tcg--grid{--cw:100%}
+.tcg--zoom{--cw:min(340px,78vw)}
+.tcg--placeholder{border-radius:5cqw;background:var(--bg2)}
