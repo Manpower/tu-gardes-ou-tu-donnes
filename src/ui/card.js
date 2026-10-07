@@ -38,6 +38,22 @@ export function imageUrl(p, w = 520) {
   return `${FANDOM}${p.image}/revision/latest/scale-to-width-down/${width}`;
 }
 
+const FAIL = "this.parentNode.classList.remove('has-img');this.remove()";
+
+/**
+ * Illustration de la carte.
+ * Les anciens GIF Fandom sont convertis en local (media/<slug>.webp pour l'image fixe,
+ * media/<slug>.mp4 pour la boucle) : le deck et les mini-cartes n'affichent que l'image fixe,
+ * la table, l'accueil et le zoom jouent la vidéo. Si la vidéo ne se lit pas, l'image fixe (poster) reste affichée.
+ */
+function artMedia(p, src, opts) {
+  const cls = `tcg-img tcg-img--${p.image_kind === 'p' ? 'portrait' : 'scene'}`;
+  if (p.media && !opts.small) {
+    return `<video class="${cls}" src="media/${esc(p.media)}.mp4" poster="${esc(src)}" autoplay muted loop playsinline preload="metadata" disablepictureinpicture aria-hidden="true" onerror="this.onerror=null;this.removeAttribute('src')"></video>`;
+  }
+  return `<img class="${cls}" src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" draggable="false" onerror="${FAIL}">`;
+}
+
 function nameSize(name) {
   const n = name.length;
   return n > 34 ? 'xs' : n > 24 ? 's' : n > 16 ? 'm' : 'l';
@@ -57,14 +73,14 @@ export function cardFront(p, opts = {}) {
     if (p.already_filmed) flags.push('<span class="flag flag--filmed">Déjà tourné</span>');
     if (p.confidence === 'moyenne') flags.push('<span class="flag flag--warn">À vérifier</span>');
   }
-  const src = imageUrl(p, opts.small ? 320 : 520);
+  const src = p.media ? `media/${p.media}.webp` : imageUrl(p, opts.small ? 320 : 520);
   return `<div class="tcg-face tcg-front tcg--${foil}" style="--fr:${frColor(p.franchise_id)}">
     <div class="tcg-frame">
       <div class="tcg-top"><span class="tcg-cat">${esc(p.category || (p.kind === 'personnage' ? 'Personnage' : 'Pouvoir'))}</span>${gems(tier)}</div>
       <h3 class="tcg-name tcg-name--${nameSize(p.name_fr)}">${esc(p.name_fr)}</h3>
       <div class="tcg-art ${src ? 'has-img' : ''}">
         ${sigil(p.id)}
-        ${src ? `<img class="tcg-img tcg-img--${p.image_kind === 'p' ? 'portrait' : 'scene'}" src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" draggable="false" onerror="this.parentNode.classList.remove('has-img');this.remove()">` : ''}
+        ${src ? artMedia(p, src, opts) : ''}
         ${!src && p.kanji && [...p.kanji].length <= 8 ? `<span class="tcg-glyph tcg-glyph--${Math.min(8, Math.max(2, [...p.kanji].length))}">${esc(p.kanji)}</span>` : ''}
         ${p.romaji || p.name_en ? `<span class="tcg-sub">${esc(p.romaji || p.name_en)}</span>` : ''}
         ${flags.length ? `<span class="tcg-flags">${flags.join('')}</span>` : ''}

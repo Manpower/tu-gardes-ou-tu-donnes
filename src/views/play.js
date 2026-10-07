@@ -125,7 +125,8 @@ export function mount(S, root, rerender) {
   if (g.phase === 'choose') {
     const d = decider(g.i);
     // précharge l'illustration de la carte cachée pour que le retournement soit net
-    const hidSrc = imageUrl(g.rounds[g.i].hid);
+    const hid = g.rounds[g.i].hid;
+    const hidSrc = hid?.media ? `media/${hid.media}.webp` : imageUrl(hid);
     if (hidSrc) { const im = new Image(); im.referrerPolicy = 'no-referrer'; im.src = hidSrc; }
     const seats = root.querySelectorAll('.seat');
     mountDrag(root.querySelector('#proposed'), {

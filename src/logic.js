@@ -18,7 +18,7 @@ export const decider = (i) => (i === 1 ? 1 : 0);
 
 export function createIndex(db) {
   // rattache l'illustration (data/images.json, chemins Fandom) à chaque carte
-  db.powers.forEach((p) => { const i = IMAGES[p.id]; p.image = i ? i.p : null; p.image_w = i?.w || 0; p.image_kind = i ? i.m : null; p.image_src = i ? i.s : null; });
+  db.powers.forEach((p) => { const i = IMAGES[p.id]; p.image = i ? i.p : null; p.image_w = i?.w || 0; p.image_kind = i ? i.m : null; p.image_src = i ? i.s : null; p.media = i?.v || null; });
   const byId = new Map(db.powers.map((p) => [p.id, p]));
   return { ...db, byId };
 }
